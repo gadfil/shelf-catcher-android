@@ -9,8 +9,16 @@ public class Stores {
 
     @Override
     public String toString() {
-        return  full_name ;
+        return "Stores{" +
+                "id=" + id +
+                ", full_name='" + full_name + '\'' +
+                '}';
     }
+
+    //    @Override
+//    public String toString() {
+//        return  full_name ;
+//    }
 
     public long getId() {
         return id;

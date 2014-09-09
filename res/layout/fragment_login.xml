@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/fragment_login_padding">
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:hint="@string/hint_pass"
+            android:textSize="@dimen/bt_log_in_text_size"
+            android:id="@+id/editPass"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editLogin"
+            android:hint="@string/hint_login"
+            android:textSize="@dimen/bt_log_in_text_size"
+            android:layout_above="@+id/editPass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/fragment_login_margin"/>
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/log_in"
+            android:id="@+id/button"
+            android:textSize="@dimen/bt_log_in_text_size"
+            android:layout_below="@+id/editPass" android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/fragment_login_margin"/>
+</RelativeLayout>

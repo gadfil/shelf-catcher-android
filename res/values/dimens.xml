@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fragment_login_margin">60dp</dimen>
+    <dimen name="fragment_login_padding">55dp</dimen>
+    <dimen name="bt_log_in_text_size">50sp</dimen>
+    <dimen name="tv_margin_top">10dp</dimen>
+</resources>
