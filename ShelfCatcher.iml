@@ -15,6 +15,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-simplexmlconverter-1.1" level="project" />
+    <orderEntry type="module" module-name="DataDroid" exported="" />
+    <orderEntry type="library" exported="" name="libs" level="project" />
+    <orderEntry type="module" module-name="appcompat" exported="" />
   </component>
 </module>
 
