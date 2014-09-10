@@ -20,6 +20,7 @@
     <orderEntry type="library" exported="" name="libs" level="project" />
     <orderEntry type="module" module-name="appcompat" exported="" />
     <orderEntry type="library" name="retrofit-1.5.1" level="project" />
+    <orderEntry type="library" name="groundy-1.5" level="project" />
   </component>
 </module>
 

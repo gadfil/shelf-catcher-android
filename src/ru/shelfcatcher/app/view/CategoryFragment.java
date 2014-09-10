@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,44 +13,52 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import retrofit.RestAdapter;
 import ru.shelfcatcher.app.R;
-import ru.shelfcatcher.app.controller.CategoryActivity;
-import ru.shelfcatcher.app.model.data.Store;
+import ru.shelfcatcher.app.controller.ShelveActivity;
+import ru.shelfcatcher.app.model.data.Category;
 import ru.shelfcatcher.app.model.operation.Util;
 import ru.shelfcatcher.app.model.operation.netowrk.Api;
 
 /**
  * Created by gadfil on 10.09.2014.
  */
-public class StoresFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class CategoryFragment extends Fragment implements AdapterView.OnItemClickListener {
+    private static final String ARG_STORE_ID = "arg_store_id";
+    private long mStoreId;
+    private ArrayAdapter<Category> mAdapter;
     private ListView mListView;
-    private ArrayAdapter<Store> mAdapter;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_content, container, false);
         mListView = (ListView)rootView.findViewById(R.id.listView);
-        mListView.setOnItemClickListener(this);
-        new ApiStoresTask(getActivity()).execute();
+        new ApiCategoryTask(getActivity()).execute();
         return rootView;
 
     }
 
+    public static Fragment newInstance(long storeId){
+        Bundle arg = new Bundle();
+        arg.putLong(ARG_STORE_ID, storeId);
+        CategoryFragment fragment = new CategoryFragment();
+        fragment.setArguments(arg);
+        return fragment;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("mylog", parent.getAdapter().getItem(position).toString());
-        long storeId = ((Store)parent.getAdapter().getItem(position)).getId();
-        Intent intent = new Intent(getActivity(), CategoryActivity.class);
-        intent.putExtra(CategoryActivity.STORE_ID, storeId);
-        startActivity(intent);
+        Intent intent = new Intent(getActivity(), ShelveActivity.class);
+        intent.putExtra(ShelveActivity.STORE_ID, mStoreId);
+
+
 
     }
 
-
-    class ApiStoresTask extends AsyncTask{
+    class ApiCategoryTask extends AsyncTask {
+        private Category[] mCategories;
         private Context mContext;
-        private Store[] mStores;
 
-        ApiStoresTask(Context mContext) {
+        ApiCategoryTask(Context mContext) {
             this.mContext = mContext;
         }
 
@@ -62,7 +69,13 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
                     .setEndpoint(Api.BASE_URL)
                     .build();
             Api api = restAdapter.create(Api.class);
-            mStores = api.getStores(Util.getToken(mContext)).getStores();
+            mCategories = api.getCategories(Util.getToken(mContext)).getCategories();
+
+//            Shelve[] shelves = api.getShelves("1").getShelves();
+//
+//            Log.d("mylog", "#shelves.length = "  + shelves.length);
+
+
 
             return null;
         }
@@ -70,8 +83,8 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            if(mStores !=null){
-                mAdapter = new ArrayAdapter<Store>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, mStores);
+            if(mCategories !=null){
+                mAdapter = new ArrayAdapter<Category>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, mCategories);
                 mListView.setAdapter(mAdapter);
             }
         }

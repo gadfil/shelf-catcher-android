@@ -3,15 +3,23 @@ package ru.shelfcatcher.app.model.data;
 /**
  * Created by gadfil on 09.09.2014.
  */
-public class Shelf {
+public class Shelve {
     private long id;
     private String name;
 
+//    @Override
+//    public String toString() {
+//        return name;
+//    }
+
+
     @Override
     public String toString() {
-        return name;
+        return "Shelve{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
-
 
     public long getId() {
         return id;

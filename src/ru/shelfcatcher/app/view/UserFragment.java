@@ -1,5 +1,6 @@
 package ru.shelfcatcher.app.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import ru.shelfcatcher.app.R;
+import ru.shelfcatcher.app.controller.StoresActivity;
 
 /**
  * Created by gadfil on 09.09.2014.
@@ -56,6 +58,8 @@ public class UserFragment extends Fragment  implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+
+        startActivity(new Intent(getActivity(), StoresActivity.class));
 
     }
 }
