@@ -3,7 +3,7 @@ package ru.shelfcatcher.app.model.data;
 /**
  * Created by gadfil on 09.09.2014.
  */
-public class Categories {
+public class Category {
     private long id;
     private String name;
 

@@ -28,7 +28,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/log_in"
-            android:id="@+id/button"
+            android:id="@+id/buttonLogin"
             android:textSize="@dimen/bt_log_in_text_size"
             android:layout_below="@+id/editPass" android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fragment_login_margin"/>
