@@ -35,7 +35,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_content, container, false);
-        mListView = (ListView)rootView.findViewById(R.id.listView);
+        mListView = (ListView) rootView.findViewById(R.id.listView);
         mListView.setOnItemClickListener(this);
         new ApiStoresTask(getActivity()).execute();
         return rootView;
@@ -45,7 +45,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("mylog", parent.getAdapter().getItem(position).toString());
-        long storeId = ((Store)parent.getAdapter().getItem(position)).getId();
+        long storeId = ((Store) parent.getAdapter().getItem(position)).getId();
         Intent intent = new Intent(getActivity(), CategoryActivity.class);
         intent.putExtra(CategoryActivity.STORE_ID, storeId);
         startActivity(intent);
@@ -55,14 +55,15 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-            setHasOptionsMenu(true);
-            mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-            mActionBar.setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
+        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setTitle(R.string.title_stores);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 getActivity().finish();
                 break;
@@ -71,7 +72,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     }
 
 
-    class ApiStoresTask extends AsyncTask{
+    class ApiStoresTask extends AsyncTask {
         private Context mContext;
         private Store[] mStores;
 
@@ -92,12 +93,11 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
         }
 
 
-
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            if(mStores !=null){
-                mAdapter = new ArrayAdapter<Store>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, mStores);
+            if (mStores != null) {
+                mAdapter = new ArrayAdapter<Store>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, mStores);
                 mListView.setAdapter(mAdapter);
             }
         }

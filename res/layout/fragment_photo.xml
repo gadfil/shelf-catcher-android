@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <SurfaceView android:id="@+id/surfaceView"
+
+                 android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:layout_above="@+id/controller_layout"/>
+
+    <FrameLayout android:id="@+id/photoFrame"
+
+                 android:layout_width="fill_parent" android:layout_height="fill_parent"
+                 android:layout_toLeftOf="@+id/textView3"
+                 android:layout_toRightOf="@+id/textView2"
+                 android:layout_below="@+id/textView"
+            android:layout_above="@+id/textView4"/>
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/controller_layout"
+                    android:layout_alignParentBottom="true">
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:padding="10dp"
+            android:background="@drawable/button_transporent"
+            android:drawableStart="@drawable/oval"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:id="@+id/button2"
+            android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/button"/>
+        </RelativeLayout>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/border"
+            android:id="@+id/textView"
+            android:background="@drawable/border"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"/>
+    <TextView
+            android:layout_width="@dimen/border"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:id="@+id/textView2" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:layout_above="@+id/controller_layout"/>
+    <TextView
+            android:layout_width="@dimen/border"
+            android:layout_height="fill_parent"
+            android:background="@drawable/border"
+            android:id="@+id/textView3"
+            android:layout_above="@+id/controller_layout"
+            android:layout_alignParentRight="true"
+            />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/border"
+            android:background="@drawable/border"
+            android:id="@+id/textView4"
+            android:layout_toLeftOf="@+id/textView3"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/controller_layout"/>
+</RelativeLayout>

@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import com.foxykeep.datadroid.requestmanager.Request;
-import com.foxykeep.datadroid.requestmanager.RequestManager;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import ru.shelfcatcher.app.R;
@@ -20,7 +18,7 @@ import ru.shelfcatcher.app.view.UserFragment;
 
 import java.util.Arrays;
 
-public class MyActivity extends ActionBarActivity implements RequestManager.RequestListener, Login {
+public class MyActivity extends ActionBarActivity implements  Login {
 
 
     @Override
@@ -43,25 +41,6 @@ public class MyActivity extends ActionBarActivity implements RequestManager.Requ
     }
 
 
-    @Override
-    public void onRequestFinished(Request request, Bundle resultData) {
-
-    }
-
-    @Override
-    public void onRequestConnectionError(Request request, int statusCode) {
-
-    }
-
-    @Override
-    public void onRequestDataError(Request request) {
-
-    }
-
-    @Override
-    public void onRequestCustomError(Request request, Bundle resultData) {
-
-    }
 
     @Override
     public void login(String login, String password) {

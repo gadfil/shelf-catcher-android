@@ -11,7 +11,8 @@
             android:text="@string/start"
             android:textSize="@dimen/bt_log_in_text_size"
             android:id="@+id/user_fragment_btStart"
-            android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

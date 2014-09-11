@@ -11,7 +11,6 @@ import ru.shelfcatcher.app.view.StoresFragment;
  * Created by gadfil on 10.09.2014.
  */
 public class StoresActivity extends ActionBarActivity {
-    private ListView mListView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

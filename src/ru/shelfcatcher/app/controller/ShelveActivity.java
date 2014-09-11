@@ -13,14 +13,16 @@ import ru.shelfcatcher.app.view.StoresFragment;
  */
 public class ShelveActivity extends ActionBarActivity {
     public static String STORE_ID = "store_id";
+    public static String CATEGORY_ID = "category_id";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-//        long storeId = getIntent().getLongExtra(STORE_ID, 1);
+        long storeId = getIntent().getLongExtra(STORE_ID, 1);
+        long categoryId = getIntent().getLongExtra(CATEGORY_ID, 1);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, ShelveFragment.newInstance(1,1))
+                .replace(R.id.container, ShelveFragment.newInstance(storeId,categoryId))
                 .commit();
     }
 }

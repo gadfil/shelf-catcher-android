@@ -37,6 +37,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
                               Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_content, container, false);
         mListView = (ListView)rootView.findViewById(R.id.listView);
+        mListView.setOnItemClickListener(this);
         new ApiCategoryTask(getActivity()).execute();
         return rootView;
 
@@ -52,8 +53,13 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        long categoryId = ((Category)parent.getAdapter().getItem(position)).getId();
+
         Intent intent = new Intent(getActivity(), ShelveActivity.class);
         intent.putExtra(ShelveActivity.STORE_ID, mStoreId);
+        intent.putExtra(ShelveActivity.CATEGORY_ID, categoryId);
+
+        startActivity(intent);
 
 
 
@@ -65,6 +71,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
         setHasOptionsMenu(true);
         mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setTitle(R.string.title_category);
     }
 
     @Override

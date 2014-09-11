@@ -5,21 +5,21 @@ package ru.shelfcatcher.app.model.data;
  */
 public class Shelve {
     private long id;
-    private String name;
-
-//    @Override
-//    public String toString() {
-//        return name;
-//    }
-
+    private String kind;
 
     @Override
     public String toString() {
-        return "Shelve{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return kind;
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Shelve{" +
+//                "id=" + id +
+//                ", kind='" + kind + '\'' +
+//                '}';
+//    }
 
     public long getId() {
         return id;
@@ -29,11 +29,11 @@ public class Shelve {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getKind() {
+        return kind;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 }

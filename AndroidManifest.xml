@@ -10,10 +10,10 @@
         <activity android:name=".controller.MyActivity"
                   android:configChanges="orientation|screenSize"
                   android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".controller.StoresActivity"
                   android:configChanges="orientation|screenSize"/>
@@ -21,7 +21,17 @@
                   android:configChanges="orientation|screenSize"/>
         <activity android:name=".controller.ShelveActivity"
                   android:configChanges="orientation|screenSize"/>
+        <activity android:name=".controller.PhotoActivity"
+                android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 </manifest>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ShelfCatcher</string>
     <string name="log_in">Войти</string>
     <string name="hint_pass">Password</string>
     <string name="hint_login">Login</string>
@@ -12,6 +11,8 @@
     <string name="title_category">Категории</string>
     <string name="title_shelves">Полки</string>
     <string name="log_out">выйти</string>
+    <string name="app_name">ShelfCatcher</string>
+    <string name="cancel">Отмена</string>
 
 
 </resources>

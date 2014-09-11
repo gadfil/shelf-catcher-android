@@ -75,6 +75,7 @@ public class UserFragment extends Fragment  implements View.OnClickListener{
         try {
             mLogin = (Login) activity;
             mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+            mActionBar.setTitle(R.string.app_name);
         } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement Login.");
         }
