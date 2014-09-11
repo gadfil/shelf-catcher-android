@@ -1,12 +1,16 @@
 package ru.shelfcatcher.app.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,6 +29,8 @@ import ru.shelfcatcher.app.model.operation.netowrk.Api;
 public class StoresFragment extends Fragment implements AdapterView.OnItemClickListener {
     private ListView mListView;
     private ArrayAdapter<Store> mAdapter;
+    private ActionBar mActionBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +50,24 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
         intent.putExtra(CategoryActivity.STORE_ID, storeId);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+            setHasOptionsMenu(true);
+            mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -66,6 +90,8 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
 
             return null;
         }
+
+
 
         @Override
         protected void onPostExecute(Object o) {

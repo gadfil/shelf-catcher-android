@@ -65,13 +65,13 @@ public class MyActivity extends ActionBarActivity implements RequestManager.Requ
 
     @Override
     public void login(String login, String password) {
-        Log.d("login", "#login");
         Bundle arg = new Bundle();
         arg.putString(LoginTask.ARG_LOGIN, login);
         arg.putString(LoginTask.ARG_PASSWORD, password);
         new LoginTask(this).execute(arg);
 
     }
+
 
     @Override
     public void logout() {

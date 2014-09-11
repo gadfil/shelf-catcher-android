@@ -1,11 +1,15 @@
 package ru.shelfcatcher.app.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +30,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
     private long mStoreId;
     private ArrayAdapter<Category> mAdapter;
     private ListView mListView;
+    private ActionBar mActionBar;
 
     @Override
      public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +59,23 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        setHasOptionsMenu(true);
+        mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     class ApiCategoryTask extends AsyncTask {
         private Category[] mCategories;
         private Context mContext;
