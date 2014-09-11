@@ -11,7 +11,7 @@
     <string name="title_stores">Магазины</string>
     <string name="title_category">Категории</string>
     <string name="title_shelves">Полки</string>
-
+    <string name="log_out">выйти</string>
 
 
 </resources>

@@ -1,15 +1,18 @@
 package ru.shelfcatcher.app.view;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Button;
 import android.widget.TextView;
 import ru.shelfcatcher.app.R;
+import ru.shelfcatcher.app.controller.Login;
 import ru.shelfcatcher.app.controller.StoresActivity;
 
 /**
@@ -22,6 +25,9 @@ public class UserFragment extends Fragment  implements View.OnClickListener{
     private TextView mFullName;
     private TextView mCompanyName;
     private Button mButtonStart;
+
+    private ActionBar mActionBar;
+    private Login mLogin;
 
 
     @Override
@@ -60,6 +66,37 @@ public class UserFragment extends Fragment  implements View.OnClickListener{
     public void onClick(View v) {
 
         startActivity(new Intent(getActivity(), StoresActivity.class));
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        setHasOptionsMenu(true);
+        try {
+            mLogin = (Login) activity;
+            mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement Login.");
+        }
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.user_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_log_out:
+                mLogin.logout();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

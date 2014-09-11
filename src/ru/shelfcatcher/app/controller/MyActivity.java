@@ -75,6 +75,11 @@ public class MyActivity extends ActionBarActivity implements RequestManager.Requ
 
     @Override
     public void logout() {
+        Util.setToken(this, null);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, LoginFragment.newInstance())
+                .commit();
 
     }
 
@@ -99,11 +104,24 @@ public class MyActivity extends ActionBarActivity implements RequestManager.Requ
             Api api = restAdapter.create(Api.class);
 
             if (params.length != 0) {
-                try {
-                    String login = params[0].getString(ARG_LOGIN);
-                    String password = params[0].getString(ARG_PASSWORD);
-                    mUser = api.login(login, password).getUser();
-                } catch (RetrofitError error) {
+                String login = params[0].getString(ARG_LOGIN);
+                String password = params[0].getString(ARG_PASSWORD);
+                logIn(api, login, password);
+
+            } else {
+
+                logIn(api);
+
+            }
+
+
+            return null;
+        }
+
+        private void logIn(Api api) {
+            try {
+                mUser = api.userMe(Util.getToken(mContext)).getUser();
+            } catch (RetrofitError error) {
                     if (error.getResponse() != null) {
                         int code = error.getResponse().getStatus();
                         Log.e("log", "Http error, status : " + code);
@@ -113,37 +131,35 @@ public class MyActivity extends ActionBarActivity implements RequestManager.Requ
                         Log.e("log", error.getMessage());
                     }
                 }
+        }
 
-            } else {
-
-                try {
-                    mUser = api.userMe(Util.getToken(mContext)).getUser();
-                } catch (RetrofitError error) {
-                        if (error.getResponse() != null) {
-                            int code = error.getResponse().getStatus();
-                            Log.e("log", "Http error, status : " + code);
-                        } else {
-                            Log.d("log", "Unknown error");
-                            error.printStackTrace();
-                            Log.e("log", error.getMessage());
-                        }
-                    }
-
+        private void logIn(Api api, String login, String password) {
+            try {
+                mUser = api.login(login, password).getUser();
+            } catch (RetrofitError error) {
+                if (error.getResponse() != null) {
+                    int code = error.getResponse().getStatus();
+                    Log.e("log", "Http error, status : " + code);
+                } else {
+                    Log.d("log", "Unknown error");
+                    error.printStackTrace();
+                    Log.e("log", error.getMessage());
+                }
             }
-
-
-            return null;
         }
 
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
+            Log.d("log", "mUser " + mUser);
             if (mUser != null) {
                 Util.setToken(getApplicationContext(), mUser.getToken());
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.container, UserFragment.newInstance(mUser.getFull_name(), mUser.getCompany_name()))
                         .commit();
+            }else{
+             logout();
             }
         }
 
