@@ -14,6 +14,7 @@
                  android:layout_toLeftOf="@+id/textView3"
                  android:layout_toRightOf="@+id/textView2"
                  android:layout_below="@+id/textView"
+                 android:background="@android:color/transparent"
             android:layout_above="@+id/textView4"/>
 
     <RelativeLayout android:layout_width="match_parent"

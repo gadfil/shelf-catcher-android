@@ -1,26 +1,32 @@
 package ru.shelfcatcher.app.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.*;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import ru.shelfcatcher.app.R;
 
 /**
  * Created by gadfil on 12.09.2014.
  */
 public class MyViewBorder extends View implements View.OnTouchListener {
 
+    private static final int WEIGHT_BORDER = 2;
     private final Paint paint;
     private final int maskColor;
-    private final int frameColor;
-    private final int cornerColor;
+    //    private final int frameColor;
+    private final int mBorderColor;
     private Rect frame;
     private Point screenResolution;
 
     private int lastX, lastY;
-
+    private int displayWidth;
+    private int displayHeight;
     private static final int MIN_FRAME_WIDTH = 50; // originally 240
     private static final int MIN_FRAME_HEIGHT = 20; // originally 240
     private static final int MAX_FRAME_WIDTH = 800; // originally 480
@@ -28,18 +34,44 @@ public class MyViewBorder extends View implements View.OnTouchListener {
 
     public MyViewBorder(Context context) {
         super(context);
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        maskColor = Color.argb(200, 100, 100, 100);
+        mBorderColor = Color.WHITE;
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        displayWidth = display.getWidth();
+        displayHeight = display.getHeight();
+
+        Log.d("log", "width " + displayWidth +
+                " height " +
+                displayHeight);
+        screenResolution = new Point(displayWidth, displayHeight);
+        calcFramingRect();
+
+    }
+
+    public MyViewBorder(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyViewBorder);
+
+//        displayWidth = a.getDimensionPixelOffset(R.styleable.)
+//        displayHeight = display.getHeight()
+
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         maskColor = Color.argb(200, 100, 100, 100);
-        frameColor = Color.LTGRAY;
-        cornerColor = Color.WHITE;
+//        frameColor = Color.LTGRAY;
+//        mBorderColor = Color.WHITE;
+        mBorderColor = a.getColor(R.styleable.MyViewBorder_border_color, Color.WHITE);
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
-
-        screenResolution = new Point(width, height);
-        calcFramingRect();
+//        displayWidth = display.getWidth();
+//        displayHeight = display.getHeight();
+//        displayWidth = this.getLayoutParams().width;
+//        displayHeight = this.getLayoutParams().height;
+//        Log.d("log", "width " + displayWidth + " height " + displayHeight);
+//        screenResolution = new Point(displayWidth, displayHeight);
+//        calcFramingRect();
     }
 
     public Rect getFramingRect() {
@@ -69,6 +101,10 @@ public class MyViewBorder extends View implements View.OnTouchListener {
 
     @Override
     public void onDraw(Canvas canvas) {
+        displayWidth = this.getWidth();
+        displayHeight = this.getHeight();
+        screenResolution = new Point(displayWidth, displayHeight);
+        calcFramingRect();
         if (frame == null) {
             return;
         }
@@ -86,7 +122,7 @@ public class MyViewBorder extends View implements View.OnTouchListener {
         // Draw a two pixel solid border inside the framing rect
         paint.setAlpha(0);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(frameColor);
+        paint.setColor(mBorderColor);
         canvas.drawRect(frame.left, frame.top, frame.right + 1, frame.top + 2,
                 paint);
         canvas.drawRect(frame.left, frame.top + 2, frame.left + 2,
@@ -97,24 +133,18 @@ public class MyViewBorder extends View implements View.OnTouchListener {
                 frame.bottom + 1, paint);
 
         // Draw the framing rect corner UI elements
-        paint.setColor(cornerColor);
-        canvas.drawRect(frame.left , frame.top - 15, frame.left + 3,
-                frame.top, paint);
+        paint.setColor(mBorderColor);
+        canvas.drawRect(frame.left, 0, frame.left + WEIGHT_BORDER, frame.top, paint);
 
-        canvas.drawRect(frame.left - 15, frame.top, frame.left, frame.top + 15,
-                paint);
-        canvas.drawRect(frame.right - 15, frame.top - 15, frame.right + 15,
-                frame.top, paint);
-        canvas.drawRect(frame.right, frame.top - 15, frame.right + 15,
-                frame.top + 15, paint);
-        canvas.drawRect(frame.left - 15, frame.bottom, frame.left + 15,
-                frame.bottom + 15, paint);
-        canvas.drawRect(frame.left - 15, frame.bottom - 15, frame.left,
-                frame.bottom, paint);
-        canvas.drawRect(frame.right - 15, frame.bottom, frame.right + 15,
-                frame.bottom + 15, paint);
-        canvas.drawRect(frame.right, frame.bottom - 15, frame.right + 15,
-                frame.bottom + 15, paint);
+        canvas.drawRect(0, frame.top, frame.left, frame.top + WEIGHT_BORDER, paint);
+        canvas.drawRect(frame.right - WEIGHT_BORDER, frame.top, frame.right, 0, paint);
+
+        canvas.drawRect(frame.right, frame.top, displayWidth, frame.top + WEIGHT_BORDER, paint);
+
+        canvas.drawRect(frame.left, frame.bottom, frame.left + WEIGHT_BORDER, displayHeight, paint);
+        canvas.drawRect(frame.left, frame.bottom - WEIGHT_BORDER, 0, frame.bottom, paint);
+        canvas.drawRect(frame.right, frame.bottom - WEIGHT_BORDER, displayWidth, frame.bottom, paint);
+        canvas.drawRect(frame.right, frame.bottom, frame.right - WEIGHT_BORDER, displayHeight, paint);
 
     }
 
@@ -134,8 +164,7 @@ public class MyViewBorder extends View implements View.OnTouchListener {
             }
             int leftOffset = (screenResolution.x - width) / 2;
             int topOffset = (screenResolution.y - height) / 2;
-            frame = new Rect(leftOffset, topOffset, leftOffset + width,
-                    topOffset + height);
+            frame = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
         }
     }
 

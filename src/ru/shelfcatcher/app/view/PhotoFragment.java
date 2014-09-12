@@ -45,9 +45,10 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback, C
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 
-        mFrameImage = (FrameLayout)rootView.findViewById(R.id.photoFrame);
+        mFrameImage = (FrameLayout) rootView.findViewById(R.id.photoFrame);
         mFrameImage.setDrawingCacheEnabled(true);
         mFrameImage.buildDrawingCache();
+
 
         btPhotoOk = (Button) rootView.findViewById(R.id.button);
         btPhotoOk.setOnClickListener(this);
@@ -59,7 +60,18 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback, C
     public void onResume() {
         super.onResume();
         camera = Camera.open();
+//        camera = IMetaioSDKAndroid.getCamera(this);
+        Camera.Parameters parameters = camera.getParameters();
 
+//        List<String> supportedFocusModes = parameters.getSupportedFocusModes();
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+//        parameters.setPreviewSize(mFrameImage.getWidth(), mFrameImage.getHeight());
+        camera.setParameters(parameters);
+
+//        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+//        preview.
+//
 
     }
 
@@ -106,7 +118,7 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback, C
             camera.setDisplayOrientation(90);
             lp.height = previewSurfaceHeight;
             lp.width = (int) (previewSurfaceHeight / aspect);
-            ;
+
         } else {
             // ландшафтный
             camera.setDisplayOrientation(0);
@@ -166,6 +178,7 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback, C
         canvas.drawBitmap(bmp2, new Matrix(), null);
         return bmOverlay;
     }
+
     @Override
     public void onPictureTaken(byte[] paramArrayOfByte, Camera paramCamera) {
 
@@ -178,30 +191,36 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback, C
 
             long n = new Date().getTime();
 
-            String fname = "Image-"+ n +".jpg";
-            File file = new File (myDir, fname);
-            Bitmap bitmap1 = BitmapFactory.decodeByteArray(paramArrayOfByte, 0, paramArrayOfByte.length);
-            Bitmap bitmap = mFrameImage.getDrawingCache();
+            String fname = "Image-" + n + ".jpg";
+            File file = new File(myDir, fname);
+            Bitmap picture = BitmapFactory.decodeByteArray(paramArrayOfByte, 0, paramArrayOfByte.length);
+            int b = getResources().getDimensionPixelOffset(R.dimen.border);
+            Log.d("log", "border " + b);
+            picture = Bitmap.createBitmap(picture, b, b, 1500, 700);
 
-            BitmapFactory.Options opt = new BitmapFactory.Options();
-
-
-            float border = getActivity().getResources().getDimension(R.dimen.border);
-
-            int bottom = mFrameImage.getBottom();
-            int top = mFrameImage.getTop();
-            int width= mFrameImage.getWidth();
-            int height= mFrameImage.getHeight();
-            Log.d("log", "bottom = " + bottom+
-                    "\ntop = " + top+
-                    "\nwidth= " +width +
-                    "\nheight=" + height);
-
-            Bitmap outb = Bitmap.createBitmap(bitmap1,top, top,width, height);
-            if (file.exists ()) file.delete ();
+//            Bitmap bitmap1 = BitmapFactory.decodeByteArray(paramArrayOfByte, 0, paramArrayOfByte.length);
+//            Bitmap bitmap = mFrameImage.getDrawingCache();
+//
+//            BitmapFactory.Options opt = new BitmapFactory.Options();
+//
+//
+//            float border = getActivity().getResources().getDimension(R.dimen.border);
+//
+//            int bottom = mFrameImage.getBottom();
+//            int top = mFrameImage.getTop();
+//            int width= mFrameImage.getWidth();
+//            int height= mFrameImage.getHeight();
+//            Log.d("log", "bottom = " + bottom+
+//                    "\ntop = " + top+
+//                    "\nwidth= " +width +
+//                    "\nheight=" + height);
+//
+//            Bitmap outb = Bitmap.createBitmap(bitmap1,top, top,width, height);
+            if (file.exists()) file.delete();
             try {
                 FileOutputStream out = new FileOutputStream(file);
-               outb.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                picture.compress(Bitmap.CompressFormat.JPEG, 85, out);
+//               outb.compress(Bitmap.CompressFormat.JPEG, 90, out);
 //                out.write(paramArrayOfByte);
                 out.flush();
                 out.close();
@@ -227,6 +246,7 @@ public class PhotoFragment extends Fragment implements SurfaceHolder.Callback, C
 
     @Override
     public void onAutoFocus(boolean paramBoolean, Camera paramCamera) {
+        Log.d("onAutoFocus", "onAutoFocus  " + paramBoolean);
         if (paramBoolean) {
             paramCamera.takePicture(null, null, null, this);
         }

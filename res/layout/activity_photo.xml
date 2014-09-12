@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res/ru.shelfcatcher.app"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <SurfaceView android:id="@+id/surfaceView"
+
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_above="@+id/controller_layout"/>
+
+
+        <ru.shelfcatcher.app.view.MyViewBorder android:id="@+id/photoFrame"
+                                               android:layout_width="fill_parent"
+                                               android:layout_height="fill_parent"
+                                               app:border_color="@android:color/holo_red_dark"
+
+                />
+
+</RelativeLayout>
