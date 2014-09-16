@@ -17,8 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import retrofit.RestAdapter;
 import ru.shelfcatcher.app.R;
-import ru.shelfcatcher.app.controller.PhotoActivity;
-import ru.shelfcatcher.app.model.data.Category;
+import ru.shelfcatcher.app.controller.CategoryActivity;
+import ru.shelfcatcher.app.controller.PhotoReportActivity;
+import ru.shelfcatcher.app.controller.StoresActivity;
 import ru.shelfcatcher.app.model.data.Shelve;
 import ru.shelfcatcher.app.model.operation.Util;
 import ru.shelfcatcher.app.model.operation.netowrk.Api;
@@ -33,6 +34,9 @@ public class ShelveFragment extends Fragment  implements AdapterView.OnItemClick
     private ListView mListView;
     private ActionBar mActionBar;
     private ArrayAdapter<Shelve> mAdapter;
+    private long mCategoryId;
+    private long mStoreId;
+
 
 
     @Override
@@ -42,8 +46,10 @@ public class ShelveFragment extends Fragment  implements AdapterView.OnItemClick
         mListView = (ListView)rootView.findViewById(R.id.listView);
 
         if(getArguments()!=null){
+            mCategoryId = getArguments().getLong(ARG_CATEGORY_ID);
+            mStoreId = getArguments().getLong(ARG_STORE_ID);
             Bundle arg = new Bundle();
-            arg.putLong(ARG_STORE_ID,1);
+            arg.putLong(ARG_STORE_ID,mStoreId);
             new ApiShelvesTask(getActivity()).execute(arg);
         }
         mListView.setOnItemClickListener(this);
@@ -75,7 +81,9 @@ public class ShelveFragment extends Fragment  implements AdapterView.OnItemClick
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                getActivity().finish();
+                Intent intent =new Intent(getActivity(), CategoryActivity.class);
+                intent.putExtra(CategoryActivity.STORE_ID, mStoreId);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -83,7 +91,8 @@ public class ShelveFragment extends Fragment  implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(getActivity(), PhotoActivity.class));
+        long shelfId = ((Shelve)parent.getAdapter().getItem(position)).getId();
+        PhotoReportActivity.newInstance(getActivity(), mStoreId, mCategoryId, shelfId);
     }
 
     class ApiShelvesTask extends AsyncTask <Bundle, Void, Integer> {
@@ -106,9 +115,6 @@ public class ShelveFragment extends Fragment  implements AdapterView.OnItemClick
                 shelves = api.getShelves(String.valueOf(storeId), Util.getToken(mContext)).getShelves();
 
             }
-//            Shelve[] shelves = api.getShelves("1").getShelves();
-//
-//            Log.d("mylog", "#shelves.length = "  + shelves.length);
 
 
 

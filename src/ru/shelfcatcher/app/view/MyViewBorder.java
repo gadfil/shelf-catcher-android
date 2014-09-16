@@ -150,7 +150,8 @@ public class MyViewBorder extends View implements View.OnTouchListener {
 
     private void calcFramingRect() {
         if (frame == null) {
-            int width = screenResolution.x * 3 / 5;
+//            int width = screenResolution.x * 3 / 5;
+            int width = 100;
             if (width < MIN_FRAME_WIDTH) {
                 width = MIN_FRAME_WIDTH;
             } else if (width > MAX_FRAME_WIDTH) {
@@ -164,7 +165,9 @@ public class MyViewBorder extends View implements View.OnTouchListener {
             }
             int leftOffset = (screenResolution.x - width) / 2;
             int topOffset = (screenResolution.y - height) / 2;
-            frame = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+//            frame = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+            int b  = getResources().getDimensionPixelOffset(R.dimen.border);
+            frame = new Rect(b, b, displayWidth -b, displayHeight -b);
         }
     }
 

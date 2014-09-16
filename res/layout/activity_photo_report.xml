@@ -6,7 +6,7 @@
     <SurfaceView android:id="@+id/surfaceView"
 
                  android:layout_width="fill_parent" android:layout_height="fill_parent"
-            android:layout_above="@+id/controller_layout"/>
+                 android:layout_above="@+id/controller_container"/>
 
     <FrameLayout android:id="@+id/photoFrame"
 
@@ -15,30 +15,23 @@
                  android:layout_toRightOf="@+id/textView2"
                  android:layout_below="@+id/textView"
                  android:background="@android:color/transparent"
-            android:layout_above="@+id/textView4"/>
+                 android:layout_above="@+id/textView4">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:id="@+id/controller_layout"
-                    android:layout_alignParentBottom="true">
-
-    <Button
+    </FrameLayout>
+    <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:padding="10dp"
-            android:background="@drawable/button_transporent"
-            android:drawableStart="@drawable/oval"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/photo_cancel"
-            android:id="@+id/button2"
-            android:layout_centerVertical="true" android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/button"/>
-        </RelativeLayout>
+            android:id="@+id/progressBar"
+            />
+
+    <FrameLayout android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/controller_container"
+                    android:layout_alignParentBottom="true"/>
+
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="@dimen/border"
@@ -51,13 +44,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/border"
             android:id="@+id/textView2" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-            android:layout_above="@+id/controller_layout"/>
+            android:layout_above="@+id/controller_container"/>
     <TextView
             android:layout_width="@dimen/border"
             android:layout_height="fill_parent"
             android:background="@drawable/border"
             android:id="@+id/textView3"
-            android:layout_above="@+id/controller_layout"
+            android:layout_above="@+id/controller_container"
             android:layout_alignParentRight="true"
             />
     <TextView
@@ -67,5 +60,5 @@
             android:id="@+id/textView4"
             android:layout_toLeftOf="@+id/textView3"
             android:layout_alignParentRight="true"
-            android:layout_above="@+id/controller_layout"/>
+            android:layout_above="@+id/controller_container"/>
 </RelativeLayout>

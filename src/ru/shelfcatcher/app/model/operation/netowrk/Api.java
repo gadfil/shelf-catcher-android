@@ -9,8 +9,9 @@ import ru.shelfcatcher.app.model.data.*;
 public interface Api {
     public static final String BASE_URL = "http://shelf-catcher.herokuapp.com/api/v1";
     public static final String LOGIN = "/login";
+    public static final String IMAGES = "/images";
     public static final String USERS_ME = "/users/me";
-    public static final String REPORTS = "reports";
+    public static final String REPORTS = "/reports";
     public static final String STORES = "/stores";
     public static final String SHELVES = "/shelves";
     public static final String CATEGORIES = "/categories";
@@ -33,6 +34,12 @@ public interface Api {
 
     @GET(STORES+"/{id}"+SHELVES)
     public ResponseShelvesArray getShelves(@Path("id") String id, @Query(KEY_TOKEN) String token);
+
+    @Headers("Content-Type:application/json")
+    @POST(REPORTS)
+    public Message sendReports(@Body RequestReport report, @Query(KEY_TOKEN) String token );
+
+
 
 
 }

@@ -18,5 +18,11 @@
                                                app:border_color="@android:color/holo_red_dark"
 
                 />
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_marginLeft="41dp" android:layout_marginBottom="62dp"
+            android:drawableBottom="@android:drawable/ic_menu_camera"/>
 
 </RelativeLayout>

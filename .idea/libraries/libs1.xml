@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="libs1">
     <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/httpcore-4.3.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/gson-2.2.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/groundy-1.5.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/retrofit-1.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpmime-4.3.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

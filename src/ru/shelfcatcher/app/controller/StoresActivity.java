@@ -17,8 +17,7 @@ public class StoresActivity extends ActionBarActivity {
         setContentView(R.layout.main);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container,new StoresFragment())
-//                    .replace(R.id.container, LoginFragment.newInstance())
+                .replace(R.id.container, StoresFragment.newInstance())
                 .commit();
     }
 }

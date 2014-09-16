@@ -17,7 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import retrofit.RestAdapter;
 import ru.shelfcatcher.app.R;
+import ru.shelfcatcher.app.controller.MyActivity;
 import ru.shelfcatcher.app.controller.ShelveActivity;
+import ru.shelfcatcher.app.controller.StoresActivity;
 import ru.shelfcatcher.app.model.data.Category;
 import ru.shelfcatcher.app.model.operation.Util;
 import ru.shelfcatcher.app.model.operation.netowrk.Api;
@@ -36,6 +38,9 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
      public View onCreateView(LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_content, container, false);
+        if(getArguments()!=null){
+            mStoreId = getArguments().getLong(ARG_STORE_ID);
+        }
         mListView = (ListView)rootView.findViewById(R.id.listView);
         mListView.setOnItemClickListener(this);
         new ApiCategoryTask(getActivity()).execute();
@@ -78,7 +83,8 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                getActivity().finish();
+                Intent intent =new Intent(getActivity(), StoresActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -99,12 +105,6 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
                     .build();
             Api api = restAdapter.create(Api.class);
             mCategories = api.getCategories(Util.getToken(mContext)).getCategories();
-
-//            Shelve[] shelves = api.getShelves("1").getShelves();
-//
-//            Log.d("mylog", "#shelves.length = "  + shelves.length);
-
-
 
             return null;
         }

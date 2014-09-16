@@ -19,6 +19,7 @@ import android.widget.ListView;
 import retrofit.RestAdapter;
 import ru.shelfcatcher.app.R;
 import ru.shelfcatcher.app.controller.CategoryActivity;
+import ru.shelfcatcher.app.controller.MyActivity;
 import ru.shelfcatcher.app.model.data.Store;
 import ru.shelfcatcher.app.model.operation.Util;
 import ru.shelfcatcher.app.model.operation.netowrk.Api;
@@ -42,6 +43,12 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
 
     }
 
+
+    public static Fragment newInstance(){
+        StoresFragment fragment = new StoresFragment();
+
+        return fragment;
+    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("mylog", parent.getAdapter().getItem(position).toString());
@@ -65,7 +72,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getActivity().finish();
+               startActivity(new Intent(getActivity(), MyActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
