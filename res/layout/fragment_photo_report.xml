@@ -9,7 +9,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/fragment_photo_report_upload_photo"
             android:text="@string/photo_upload_to_server"
-            android:background="@drawable/button_transporent"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
     <Button
@@ -17,7 +16,6 @@
             android:layout_height="wrap_content"
             android:text="@string/photo_new_photo"
             android:gravity="center"
-            android:background="@drawable/button_transporent"
             android:id="@+id/fragment_photo_report_new_photo"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
@@ -27,7 +25,6 @@
             android:layout_height="wrap_content"
             android:text="@string/photo_next_photo"
             android:gravity="center"
-            android:background="@drawable/button_transporent"
             android:id="@+id/fragment_photo_report_next_photo"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

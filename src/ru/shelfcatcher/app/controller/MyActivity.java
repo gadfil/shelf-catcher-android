@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.Toast;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import ru.shelfcatcher.app.R;
@@ -16,9 +17,10 @@ import ru.shelfcatcher.app.view.LoginFragment;
 import ru.shelfcatcher.app.view.StoresFragment;
 import ru.shelfcatcher.app.view.UserFragment;
 
+import java.net.UnknownHostException;
 import java.util.Arrays;
 
-public class MyActivity extends ActionBarActivity implements  Login {
+public class MyActivity extends ActionBarActivity implements Login {
 
 
     @Override
@@ -39,7 +41,6 @@ public class MyActivity extends ActionBarActivity implements  Login {
 
 //        new MyAPi().execute();
     }
-
 
 
     @Override
@@ -69,6 +70,8 @@ public class MyActivity extends ActionBarActivity implements  Login {
         public static final String ARG_PASSWORD = "arg_password";
         private Context mContext;
         private User mUser;
+        private boolean mError = false;
+        private int mToast;
 
         LoginTask(Context mContext) {
             this.mContext = mContext;
@@ -101,26 +104,58 @@ public class MyActivity extends ActionBarActivity implements  Login {
             try {
                 mUser = api.userMe(Util.getToken(mContext)).getUser();
             } catch (RetrofitError error) {
-                    if (error.getResponse() != null) {
-                        int code = error.getResponse().getStatus();
-                        Log.e("log", "Http error, status : " + code);
-                    } else {
-                        Log.d("log", "Unknown error");
-                        error.printStackTrace();
-                        Log.e("log", error.getMessage());
-                    }
+                if (error.getCause() instanceof UnknownHostException) {
+
+                    Log.e("log", "# @" + error.getMessage());
+                    mError = true;
+                    mToast = R.string.network_connection_error;
+                    Toast.makeText(getApplicationContext(), mToast, Toast.LENGTH_LONG).show();
                 }
+                if (error.getResponse() != null) {
+                    int code = error.getResponse().getStatus();
+                    errorByStatusResponse(code);
+                    Log.e("log", "Http error, status : " + code);
+                } else {
+                    Log.e("log", "Unknown error");
+                    error.printStackTrace();
+                    Log.e("log", error.getMessage());
+                    Log.e("log", "" + error.isNetworkError());
+
+                }
+            } catch (Exception error) {
+                if (error.getCause() instanceof UnknownHostException) {
+
+                    Log.e("log", "# " + error.getMessage());
+                }
+                Log.e("log", "# " + error.getMessage());
+
+            }
+        }
+
+        private void errorByStatusResponse(int code) {
+            if (code == 400) {
+                mError = true;
+                mToast = R.string.user_not_found;
+            }
         }
 
         private void logIn(Api api, String login, String password) {
             try {
                 mUser = api.login(login, password).getUser();
             } catch (RetrofitError error) {
+                if (error.getCause() instanceof UnknownHostException) {
+
+                    Log.e("log", "# @" + error.getMessage());
+                    mError = true;
+                    mToast = R.string.network_connection_error;
+
+                }
                 if (error.getResponse() != null) {
                     int code = error.getResponse().getStatus();
+                    errorByStatusResponse(code);
                     Log.e("log", "Http error, status : " + code);
                 } else {
-                    Log.d("log", "Unknown error");
+                    Log.e("log", "Unknown error");
                     error.printStackTrace();
                     Log.e("log", error.getMessage());
                 }
@@ -131,14 +166,16 @@ public class MyActivity extends ActionBarActivity implements  Login {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
             Log.d("log", "mUser " + mUser);
-            if (mUser != null) {
+            if (mError) {
+                Toast.makeText(getApplicationContext(), mToast, Toast.LENGTH_LONG).show();
+            } else if (mUser != null) {
                 Util.setToken(getApplicationContext(), mUser.getToken());
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.container, UserFragment.newInstance(mUser.getFull_name(), mUser.getCompany_name()))
                         .commit();
-            }else{
-             logout();
+            } else {
+                logout();
             }
         }
 

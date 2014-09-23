@@ -16,6 +16,10 @@
     <string name="photo_upload_to_server">отправить </string>
     <string name="photo_new_photo">переснять</string>
     <string name="photo_next_photo">следующую фотография</string>
+    <string name="report_ok">Отчет успешно отправлен</string>
+    <string name="report_error">При отправке отчета произошла ошибка, попробуйте еще раз</string>
+    <string name="network_connection_error">проверьте подключение к интернету</string>
+    <string name="user_not_found">проверьте правильность логина и пароля</string>
 
 
 </resources>

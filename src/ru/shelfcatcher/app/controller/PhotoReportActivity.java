@@ -1,11 +1,13 @@
 package ru.shelfcatcher.app.controller;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.*;
 import android.hardware.Camera;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,6 +26,7 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import ru.shelfcatcher.app.R;
 import ru.shelfcatcher.app.model.data.Category;
 import ru.shelfcatcher.app.model.data.Message;
@@ -34,6 +38,7 @@ import ru.shelfcatcher.app.view.PhotoUiFragment;
 import ru.shelfcatcher.app.view.ReportUiFragment;
 
 import java.io.*;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
@@ -132,6 +137,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 
+    @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         try {
@@ -172,88 +178,17 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     @Override
     public void onPictureTaken(byte[] paramArrayOfByte, Camera paramCamera) {
 
-//
-//        Bitmap srcBmp = BitmapFactory.decodeByteArray(paramArrayOfByte, 0, paramArrayOfByte.length);
-//        int w = mSurfaceView.getWidth();
-//        int h = mSurfaceView.getHeight();
-//
-//        Bitmap  dstBmp = Bitmap.createBitmap(
-//                srcBmp,
-//                srcBmp.getWidth()/(w/mBorderSize),
-//                (srcBmp.getHeight()/(h/mBorderSize)),
-//                srcBmp.getWidth()- srcBmp.getWidth()/(w/mBorderSize),
-//                srcBmp.getHeight()-srcBmp.getHeight()/(h/mBorderSize)
-//        );
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//        dstBmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//        byte[] byteArray = stream.toByteArray();
-
-//        byteArray = null;
-//        dstBmp = null;
-//        srcBmp = null;
 
 
         try {
 
 
-//            String root = Environment.getExternalStorageDirectory().toString();
-//            File myDir = new File(root + "/a_saved_img");
-//            myDir.mkdirs();
-//
-//            String fname = "imga-" + System.currentTimeMillis() + ".jpg";
-//            File file = new File(myDir, fname);
-//            FileOutputStream out = new FileOutputStream(file);
-//            Matrix matrix = new Matrix();
-//            matrix.postRotate(90);
-//
-//            Bitmap bitmapOrg = BitmapFactory.decodeByteArray(paramArrayOfByte, 0, paramArrayOfByte.length);
-//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapOrg,bitmapOrg.getWidth(),bitmapOrg.getHeight(),true);
-//
-//            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-//
-
-
-//            int w = mSurfaceView.getWidth();
-//            int h = mSurfaceView.getHeight();
-//
-//            Log.d("img","w "+ w );
-//            Log.d("img","h "+ h );
-//            Log.d("img","mFrameLayout w "+ mFrameLayout.getWidth() );
-//            Log.d("img","mFrameLayout h "+ mFrameLayout.getHeight() );
-//
-//            Log.d("img","mFrameLayout top    "+ mFrameLayout.getTop() );
-//            Log.d("img","mFrameLayout bottom "+ mFrameLayout.getBottom() );
-//              Log.d("img","mFrameLayout left "+ mFrameLayout.getLeft() );
-//            Log.d("img","mFrameLayout right  "+ mFrameLayout.getRight() );
-//
-//            Log.d("img","wI "+ rotatedBitmap.getWidth() );
-//            Log.d("img","hI "+ rotatedBitmap.getHeight() );
-//
-//            Log.d("img", "##"+ System.currentTimeMillis());
-
-//            int border = rotatedBitmap.getWidth()/(mFrameLayout.getWidth()/ mFrameLayout.getLeft());
-//            Bitmap  dstBmp = Bitmap.createBitmap(
-//                    rotatedBitmap,
-//                    border,
-//                    border,
-//                    rotatedBitmap.getWidth()-border*2,
-//                    rotatedBitmap.getHeight()-border*2
-//            );
-//
-//            dstBmp.compress(Bitmap.CompressFormat.JPEG, 70, out);
 
             photoList.add(new Photo(paramArrayOfByte));
-//            picture.compress(Bitmap.CompressFormat.JPEG, 85, out);
-//               outb.compress(Bitmap.CompressFormat.JPEG, 90, out);
-//                out.write(paramArrayOfByte);
-//            out.flush();
-//            out.close();
 
         } catch (Exception e) {
         }
 
-//        после того, как снимок сделан, показ превью отключается. необходимо включить его
-//        paramCamera.startPreview();
 
 
         reportUi();
@@ -267,7 +202,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     @Override
     public void onPreviewFrame(byte[] paramArrayOfByte, Camera paramCamera) {
-        // здесь можно обрабатывать изображение, показываемое в preview
     }
 
     @Override
@@ -300,7 +234,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     @Override
     public void report() {
         if(isSend) {
-            Log.d("img", "#report#");
             new SendPhoto().execute();
         }
 
@@ -323,7 +256,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         Photo(byte[] paramArrayOfByte) {
             name = "img-" + System.currentTimeMillis() + ".jpeg";
             photo = paramArrayOfByte;
-//            Log.d("mylog", "# " + name +" @size: "+ paramArrayOfByte.length);
         }
 
 
@@ -355,29 +287,19 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
             isSend = false;
         }
 
+        private boolean mError = false;
+        private int mToast;
+
+        private void errorByStatusResponse(int code) {
+            if (code == 400) {
+                mError = true;
+                mToast = R.string.user_not_found;
+            }
+        }
+
         @Override
         protected Object doInBackground(Object[] params) {
 
-//            try {
-//                RestAdapter restAdapter = new RestAdapter.Builder()
-//                        .setEndpoint(Api.BASE_URL)
-//                        .build();
-//                Api api = restAdapter.create(Api.class);
-//                Report report = new Report();
-//                report.setCategory_id(1);
-//                report.setShelf_id(1);
-//                report.setImage_ids(new long[]{4, 5});
-//                RequestReport requestReport = new RequestReport();
-//                requestReport.setReport(report);
-//                Message message = api.sendReports(requestReport, Util.getToken(getApplicationContext()));
-//                Log.d("img", "#"+ message);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                Log.e("img", e.getMessage());
-//                Intent intent = new Intent(getApplicationContext(), MyActivity.class);
-//                startActivity(intent);
-//
-//            }
 
 
             try {
@@ -387,7 +309,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
                     for (int i = 0; i < photoList.size(); i++) {
                         Photo photo = photoList.get(i);
-                        Log.d("img", "#" + System.currentTimeMillis());
 
                         Matrix matrix = new Matrix();
                         matrix.postRotate(90);
@@ -409,30 +330,29 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         dstBmp.compress(Bitmap.CompressFormat.JPEG, 70, stream);
-                        //////////////////////////////////////////////
-//                        Bitmap srcBmp = BitmapFactory.decodeByteArray(photo.getPhoto(), 0, photo.getPhoto().length);
-//                        int w = mSurfaceView.getWidth();
-//                        int h = mSurfaceView.getHeight();
-//                        Log.d("img", "##"+ System.currentTimeMillis());
-//                        Bitmap  dstBmp = Bitmap.createBitmap(
-//                                srcBmp,
-//                                srcBmp.getWidth()/(w/mBorderSize),
-//                                (srcBmp.getHeight()/(h/mBorderSize)),
-//                                srcBmp.getWidth()- srcBmp.getWidth()/(w/mBorderSize),
-//                                srcBmp.getHeight()-srcBmp.getHeight()/(h/mBorderSize)
-//                                );
-//                        Log.d("img", "###"+ System.currentTimeMillis());
-//                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                        dstBmp.compress(Bitmap.CompressFormat.JPEG, 70, stream);
-//    //                    byte[] bitmapdata = dstBmp.toByteArray();
                         ByteArrayInputStream bs = new ByteArrayInputStream(stream.toByteArray());
-                        Log.d("img", "#" + photo.name);
-                        Log.d("img", "@" + System.currentTimeMillis());
                         long id = loadPhoto(bs, photo.name);
                         if (id > 0) {
                             photoIdList.add(new Long(id));
                         }
                     }
+                }
+            } catch (RetrofitError error) {
+                if (error.getCause() instanceof UnknownHostException) {
+
+                    Log.e("log", "# @" + error.getMessage());
+                    mError = true;
+                    mToast = R.string.network_connection_error;
+
+                }
+                if (error.getResponse() != null) {
+                    int code = error.getResponse().getStatus();
+                    errorByStatusResponse(code);
+                    Log.e("log", "Http error, status : " + code);
+                } else {
+                    Log.e("log", "Unknown error");
+                    error.printStackTrace();
+                    Log.e("log", error.getMessage());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -473,9 +393,12 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            if(result){
+            if (mError) {
+                Toast.makeText(getApplicationContext(), mToast, Toast.LENGTH_LONG).show();
+            } else  if(result){
                 Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
                 intent.putExtra(CategoryActivity.STORE_ID,mStoreId);
+                Toast.makeText(getApplicationContext(), R.string.report_ok,Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }else {
                 mProgressBar.setVisibility(View.GONE);
@@ -484,6 +407,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
                 photoIdList = null;
                 photoList = new ArrayList<Photo>();
                 photoUi();
+                Toast.makeText(getApplicationContext(), R.string.report_error,Toast.LENGTH_LONG).show();
             }
         }
 

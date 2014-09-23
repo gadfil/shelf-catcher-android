@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import ru.shelfcatcher.app.R;
 import ru.shelfcatcher.app.controller.PhotoReport;
 
@@ -15,7 +16,7 @@ import ru.shelfcatcher.app.controller.PhotoReport;
  */
 public class PhotoUiFragment extends Fragment implements View.OnClickListener {
     private PhotoReport mPhotoReport;
-    private Button mButtonPhoto;
+    private ImageButton mButtonPhoto;
     private Button mButtonCancel;
 
     @Override
@@ -27,7 +28,7 @@ public class PhotoUiFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View rootView) {
-        mButtonPhoto = (Button) rootView.findViewById(R.id.fragment_photo_controller_photo);
+        mButtonPhoto = (ImageButton) rootView.findViewById(R.id.fragment_photo_controller_photo);
         mButtonCancel = (Button) rootView.findViewById(R.id.fragment_photo_controller_cancel);
         mButtonPhoto.setOnClickListener(this);
         mButtonCancel.setOnClickListener(this);
