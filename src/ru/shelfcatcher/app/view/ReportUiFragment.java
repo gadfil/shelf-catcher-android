@@ -18,6 +18,7 @@ public class ReportUiFragment extends Fragment implements View.OnClickListener {
     private Button mButtonUploadPhoto;
     private Button mButtonNewPhoto;
     private Button mButtonNextPhoto;
+    //
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
