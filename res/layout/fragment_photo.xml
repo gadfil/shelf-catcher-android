@@ -6,7 +6,7 @@
     <SurfaceView android:id="@+id/surfaceView"
 
                  android:layout_width="fill_parent" android:layout_height="fill_parent"
-            android:layout_above="@+id/controller_layout"/>
+                 android:layout_above="@+id/controller_layout"/>
 
     <FrameLayout android:id="@+id/photoFrame"
 
@@ -15,29 +15,30 @@
                  android:layout_toRightOf="@+id/textView2"
                  android:layout_below="@+id/textView"
                  android:background="@android:color/transparent"
-            android:layout_above="@+id/textView4"/>
+                 android:layout_above="@+id/textView4"/>
 
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:id="@+id/controller_layout"
                     android:layout_alignParentBottom="true">
 
-    <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:padding="10dp"
-            android:src="@android:drawable/ic_menu_camera"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/photo_cancel"
-            android:id="@+id/button2"
-            android:layout_centerVertical="true" android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/button"/>
-        </RelativeLayout>
+        <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:background="@drawable/photo_on_btn_default_holo_light"
+                android:padding="10dp"
+                android:src="@android:drawable/ic_menu_camera"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/photo_cancel"
+                android:id="@+id/button2"
+                android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/button"/>
+    </RelativeLayout>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="@dimen/border"

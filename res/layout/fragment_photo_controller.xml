@@ -21,4 +21,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/fragment_photo_controller_photo"/>
+
+
 </RelativeLayout>

@@ -30,16 +30,14 @@ public interface Api {
     public ResponseStoreArray getStores(@Query(KEY_TOKEN) String token);
 
     @GET(CATEGORIES)
-    public ResponseCategoryArray getCategories( @Query(KEY_TOKEN) String token);
+    public ResponseCategoryArray getCategories(@Query(KEY_TOKEN) String token);
 
-    @GET(STORES+"/{id}"+SHELVES)
+    @GET(STORES + "/{id}" + SHELVES)
     public ResponseShelvesArray getShelves(@Path("id") String id, @Query(KEY_TOKEN) String token);
 
     @Headers("Content-Type:application/json")
     @POST(REPORTS)
-    public Message sendReports(@Body RequestReport report, @Query(KEY_TOKEN) String token );
-
-
+    public Message sendReports(@Body RequestReport report, @Query(KEY_TOKEN) String token);
 
 
 }

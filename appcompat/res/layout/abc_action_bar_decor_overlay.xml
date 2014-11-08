@@ -27,11 +27,11 @@
                   android:layout_height="wrap_content"
                   android:layout_gravity="top">
         <android.support.v7.internal.widget.ActionBarContainer android:id="@+id/action_bar_container"
-                                                             android:layout_width="fill_parent"
-                                                             android:layout_height="wrap_content"
-                                                             android:layout_alignParentTop="true"
-                                                             style="?attr/actionBarStyle"
-                                                             android:gravity="top">
+                                                               android:layout_width="fill_parent"
+                                                               android:layout_height="wrap_content"
+                                                               android:layout_alignParentTop="true"
+                                                               style="?attr/actionBarStyle"
+                                                               android:gravity="top">
             <android.support.v7.internal.widget.ActionBarView
                     android:id="@+id/action_bar"
                     android:layout_width="fill_parent"
@@ -50,10 +50,10 @@
                    android:layout_height="wrap_content"/>
     </LinearLayout>
     <android.support.v7.internal.widget.ActionBarContainer android:id="@+id/split_action_bar"
-                                                         android:layout_width="fill_parent"
-                                                         android:layout_height="wrap_content"
-                                                         android:layout_gravity="bottom"
-                                                         style="?attr/actionBarSplitStyle"
-                                                         android:visibility="gone"
-                                                         android:gravity="center"/>
+                                                           android:layout_width="fill_parent"
+                                                           android:layout_height="wrap_content"
+                                                           android:layout_gravity="bottom"
+                                                           style="?attr/actionBarSplitStyle"
+                                                           android:visibility="gone"
+                                                           android:gravity="center"/>
 </android.support.v7.internal.widget.ActionBarOverlayLayout>

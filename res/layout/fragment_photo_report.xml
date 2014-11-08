@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:text="@string/photo_next_photo"
             android:gravity="center"
+
             android:id="@+id/fragment_photo_report_next_photo"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

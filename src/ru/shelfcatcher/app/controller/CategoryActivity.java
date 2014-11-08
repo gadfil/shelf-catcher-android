@@ -11,6 +11,7 @@ import ru.shelfcatcher.app.view.StoresFragment;
  * Created by gadfil on 10.09.2014.
  */
 public class CategoryActivity extends ActionBarActivity {
+    public static final String ARRAY = "array";
     public static String STORE_ID = "store_id";
 
 
@@ -19,6 +20,7 @@ public class CategoryActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         long storeId = getIntent().getLongExtra(STORE_ID, 1);
+//        String []arr = getIntent().getStringArrayExtra(ARRAY);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, CategoryFragment.newInstance(storeId))

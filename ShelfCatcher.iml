@@ -11,11 +11,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 4.0 Google APIs" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 4.0.3 Google APIs" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="libs" level="project" />
-    <orderEntry type="library" name="libs1" level="project" />
-    <orderEntry type="module" module-name="appcompat" />
+    <orderEntry type="library" exported="" name="libs" level="project" />
+    <orderEntry type="library" exported="" name="libs1" level="project" />
+    <orderEntry type="module" module-name="appcompat" exported="" />
   </component>
 </module>
 

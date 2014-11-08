@@ -28,9 +28,9 @@
             />
 
     <FrameLayout android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:id="@+id/controller_container"
-                    android:layout_alignParentBottom="true"/>
+                 android:layout_height="100dp"
+                 android:id="@+id/controller_container"
+                 android:layout_alignParentBottom="true"/>
 
     <TextView
             android:layout_width="fill_parent"

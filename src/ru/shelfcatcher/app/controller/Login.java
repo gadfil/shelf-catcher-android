@@ -5,5 +5,6 @@ package ru.shelfcatcher.app.controller;
  */
 public interface Login {
     public void login(String login, String password);
+
     public void logout();
 }

@@ -13,7 +13,7 @@
     <string name="log_out">выйти</string>
     <string name="app_name">ShelfCatcher</string>
     <string name="photo_cancel">Отмена</string>
-    <string name="photo_upload_to_server">отправить </string>
+    <string name="photo_upload_to_server">отправить</string>
     <string name="photo_new_photo">переснять</string>
     <string name="photo_next_photo">следующую фотография</string>
     <string name="report_ok">Отчет успешно отправлен</string>

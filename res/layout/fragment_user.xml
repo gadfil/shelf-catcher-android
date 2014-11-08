@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/user_fragment_tv_company_name" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+            android:id="@+id/user_fragment_tv_company_name" android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -26,5 +27,6 @@
             android:text="Large Text"
             android:layout_marginTop="@dimen/tv_margin_top"
             android:id="@+id/user_fragment_tv_full_name"
-            android:layout_below="@+id/user_fragment_tv_company_name" android:layout_alignLeft="@+id/user_fragment_tv_company_name"/>
+            android:layout_below="@+id/user_fragment_tv_company_name"
+            android:layout_alignLeft="@+id/user_fragment_tv_company_name"/>
 </RelativeLayout>

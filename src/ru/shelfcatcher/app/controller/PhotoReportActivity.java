@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import ru.shelfcatcher.app.R;
-import ru.shelfcatcher.app.model.data.Category;
 import ru.shelfcatcher.app.model.data.Message;
 import ru.shelfcatcher.app.model.data.Report;
 import ru.shelfcatcher.app.model.data.RequestReport;
@@ -39,17 +38,21 @@ import ru.shelfcatcher.app.view.ReportUiFragment;
 
 import java.io.*;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by gadfil on 16.09.2014.
  */
 public class PhotoReportActivity extends ActionBarActivity implements PhotoReport, SurfaceHolder.Callback,
-        Camera.PictureCallback, Camera.PreviewCallback, Camera.AutoFocusCallback {
+        Camera.PictureCallback, Camera.PreviewCallback {
 
     private static final String KEY_CATEGORY_ID = "category_id";
     private static final String KEY_SHELF_ID = "shelf_id";
     private static final String KEY_STORE_ID = "store_id";
+    private static final String KEY_ARRAY = "key_array";
+//    private String []mArray;
 
     private ArrayList<Photo> photoList;
     private ArrayList<Long> photoIdList;
@@ -62,7 +65,9 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     private long mStoreId;
     private long mCategoryId;
     private long mShelfId;
+    private File mDir;
 
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,9 +79,16 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         setContentView(R.layout.activity_photo_report);
 
         Intent intent = getIntent();
-        mStoreId = intent.getLongExtra(KEY_STORE_ID,1);
-        mCategoryId = intent.getLongExtra(KEY_CATEGORY_ID,1);
-        mShelfId = intent.getLongExtra(KEY_SHELF_ID,1);
+        mStoreId = intent.getLongExtra(KEY_STORE_ID, 1);
+        mCategoryId = intent.getLongExtra(KEY_CATEGORY_ID, 1);
+        mShelfId = intent.getLongExtra(KEY_SHELF_ID, 1);
+//        mArray = getIntent().getStringArrayExtra(KEY_ARRAY);
+        File sdCardDirectory = Environment.getExternalStorageDirectory();
+        String dirs = "/" + Util.getStore(this) + "/" + Util.getCategory(this) + "/" + Util.getShelves(this);
+//        for(String s:mArray){
+//            dirs+="/"+s;
+//        }
+        mDir = new File(sdCardDirectory + "/ShelfCatcher" + dirs);
         mFrameLayout = (FrameLayout) findViewById(R.id.photoFrame);
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         mSurfaceHolder = mSurfaceView.getHolder();
@@ -84,17 +96,20 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         photoUi();
         photoList = new ArrayList<Photo>();
-        mProgressBar =(ProgressBar)findViewById(R.id.progressBar);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.GONE);
+
 
     }
 
 
-
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onResume() {
         super.onResume();
-        mCamera = Camera.open();
+        mCamera = Camera.open(0);
+
+
     }
 
     @Override
@@ -107,6 +122,8 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
             mCamera.release();
             mCamera = null;
         }
+
+
     }
 
 
@@ -115,6 +132,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         intent.putExtra(KEY_CATEGORY_ID, categoryId);
         intent.putExtra(KEY_SHELF_ID, shelfId);
         intent.putExtra(KEY_STORE_ID, storeId);
+//        intent.putExtra(KEY_ARRAY, array);
         context.startActivity(intent);
     }
 
@@ -179,9 +197,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     public void onPictureTaken(byte[] paramArrayOfByte, Camera paramCamera) {
 
 
-
         try {
-
 
 
             photoList.add(new Photo(paramArrayOfByte));
@@ -190,15 +206,10 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         }
 
 
-
         reportUi();
 
     }
 
-    @Override
-    public void onAutoFocus(boolean paramBoolean, Camera paramCamera) {
-        paramCamera.takePicture(null, null, null, this);
-    }
 
     @Override
     public void onPreviewFrame(byte[] paramArrayOfByte, Camera paramCamera) {
@@ -206,15 +217,23 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     @Override
     public void photo() {
-        if(isSend){
-            mCamera.takePicture(null, null, null, this);
+        if (isSend) {
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean success, Camera camera) {
+
+                    camera.takePicture(null, null, null, PhotoReportActivity.this);
+
+                }
+            });
+//            mCamera.takePicture(null, null, null, this);
         }
 
     }
 
     @Override
     public void nextPhoto() {
-        if(isSend) {
+        if (isSend) {
             mCamera.startPreview();
             photoUi();
         }
@@ -223,7 +242,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     @Override
     public void cancel() {
-        if(isSend){
+        if (isSend) {
             Intent intent = new Intent(this, MyActivity.class);
             startActivity(intent);
 
@@ -233,7 +252,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     @Override
     public void report() {
-        if(isSend) {
+        if (isSend) {
             new SendPhoto().execute();
         }
 
@@ -241,13 +260,14 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     @Override
     public void newPhoto() {
-        if(isSend) {
+        if (isSend) {
             mCamera.startPreview();
             photoList.remove(photoList.size() - 1);
             photoUi();
         }
 
     }
+
 
     class Photo {
         private String name;
@@ -277,9 +297,9 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     }
 
 
-
     class SendPhoto extends AsyncTask {
         private boolean result = false;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -301,7 +321,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         protected Object doInBackground(Object[] params) {
 
 
-
             try {
 
                 if (photoList.size() > 0) {
@@ -310,30 +329,35 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
                     for (int i = 0; i < photoList.size(); i++) {
                         Photo photo = photoList.get(i);
 
-                        Matrix matrix = new Matrix();
-                        matrix.postRotate(90);
-
-                        Bitmap bitmapOrg = BitmapFactory.decodeByteArray(photo.getPhoto(), 0, photo.getPhoto().length);
-                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapOrg, bitmapOrg.getWidth(), bitmapOrg.getHeight(), true);
-
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-
-
-                        int border = rotatedBitmap.getWidth() / (mFrameLayout.getWidth() / mFrameLayout.getLeft());
-                        Bitmap dstBmp = Bitmap.createBitmap(
-                                rotatedBitmap,
-                                border,
-                                border,
-                                rotatedBitmap.getWidth() - border * 2,
-                                rotatedBitmap.getHeight() - border * 2
-                        );
+                        Bitmap dstBmp = getBitmap(photo);
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         dstBmp.compress(Bitmap.CompressFormat.JPEG, 70, stream);
                         ByteArrayInputStream bs = new ByteArrayInputStream(stream.toByteArray());
+
+
+                        InputStream in = bs;
                         long id = loadPhoto(bs, photo.name);
                         if (id > 0) {
                             photoIdList.add(new Long(id));
+
+                            File dir = new File(mDir, "/" + simpleDateFormat.format(new Date()));
+                            dir.mkdirs();
+
+                            Bitmap bitmap = getBitmap(photo);
+                            File file = new File(dir, photo.getName());
+                            if (file.exists()) file.delete();
+                            try {
+                                FileOutputStream out = new FileOutputStream(file);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                out.flush();
+                                out.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
                         }
                     }
                 }
@@ -376,7 +400,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
                     RequestReport requestReport = new RequestReport();
                     requestReport.setReport(report);
                     Message message = api.sendReports(requestReport, Util.getToken(getApplicationContext()));
-                    if(message.getMessage().equals("ok")){
+                    if (message.getMessage().equals("ok")) {
                         result = true;
                     }
                 } catch (Exception e) {
@@ -390,24 +414,44 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
             return null;
         }
 
+        private Bitmap getBitmap(Photo photo) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+
+            Bitmap bitmapOrg = BitmapFactory.decodeByteArray(photo.getPhoto(), 0, photo.getPhoto().length);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapOrg, bitmapOrg.getWidth(), bitmapOrg.getHeight(), true);
+
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+
+
+            int border = rotatedBitmap.getWidth() / (mFrameLayout.getWidth() / mFrameLayout.getLeft());
+            return Bitmap.createBitmap(
+                    rotatedBitmap,
+                    border,
+                    border,
+                    rotatedBitmap.getWidth() - border * 2,
+                    rotatedBitmap.getHeight() - border * 2
+            );
+        }
+
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             if (mError) {
                 Toast.makeText(getApplicationContext(), mToast, Toast.LENGTH_LONG).show();
-            } else  if(result){
+            } else if (result) {
                 Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
-                intent.putExtra(CategoryActivity.STORE_ID,mStoreId);
-                Toast.makeText(getApplicationContext(), R.string.report_ok,Toast.LENGTH_LONG).show();
+                intent.putExtra(CategoryActivity.STORE_ID, mStoreId);
+                Toast.makeText(getApplicationContext(), R.string.report_ok, Toast.LENGTH_LONG).show();
                 startActivity(intent);
-            }else {
+            } else {
                 mProgressBar.setVisibility(View.GONE);
                 isSend = true;
                 mCamera.startPreview();
                 photoIdList = null;
                 photoList = new ArrayList<Photo>();
                 photoUi();
-                Toast.makeText(getApplicationContext(), R.string.report_error,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.report_error, Toast.LENGTH_LONG).show();
             }
         }
 

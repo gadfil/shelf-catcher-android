@@ -13,10 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import ru.shelfcatcher.app.R;
@@ -48,17 +45,21 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     }
 
 
-    public static Fragment newInstance(){
+    public static Fragment newInstance() {
         StoresFragment fragment = new StoresFragment();
 
         return fragment;
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("mylog", parent.getAdapter().getItem(position).toString());
         long storeId = ((Store) parent.getAdapter().getItem(position)).getId();
         Intent intent = new Intent(getActivity(), CategoryActivity.class);
         intent.putExtra(CategoryActivity.STORE_ID, storeId);
+        Util.setStore(getActivity(), ((TextView) view).getText().toString());
+//        String arr []= new String[]{((TextView)view).getText().toString()};
+//        intent.putExtra(CategoryActivity.ARRAY, arr);
         startActivity(intent);
 
     }
@@ -76,7 +77,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-               startActivity(new Intent(getActivity(), MyActivity.class));
+                startActivity(new Intent(getActivity(), MyActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -95,6 +96,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
                 mToast = R.string.user_not_found;
             }
         }
+
         ApiStoresTask(Context mContext) {
             this.mContext = mContext;
         }
@@ -108,7 +110,7 @@ public class StoresFragment extends Fragment implements AdapterView.OnItemClickL
                         .build();
                 Api api = restAdapter.create(Api.class);
                 mStores = api.getStores(Util.getToken(mContext)).getStores();
-            }catch (RetrofitError error) {
+            } catch (RetrofitError error) {
                 if (error.getCause() instanceof UnknownHostException) {
 
                     Log.e("log", "# @" + error.getMessage());

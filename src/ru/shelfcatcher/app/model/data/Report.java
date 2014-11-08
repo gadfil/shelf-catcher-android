@@ -4,9 +4,9 @@ package ru.shelfcatcher.app.model.data;
  * Created by gadfil on 09.09.2014.
  */
 public class Report {
-   private long category_id;
+    private long category_id;
     private long shelf_id;
-    private long[]image_ids;
+    private long[] image_ids;
 
     public long getCategory_id() {
         return category_id;

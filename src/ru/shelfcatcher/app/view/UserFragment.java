@@ -18,7 +18,7 @@ import ru.shelfcatcher.app.controller.StoresActivity;
 /**
  * Created by gadfil on 09.09.2014.
  */
-public class UserFragment extends Fragment  implements View.OnClickListener{
+public class UserFragment extends Fragment implements View.OnClickListener {
     public static String ARG_FULL_NAME = "full_name";
     public static String ARG_COMPANY_NAME = "company_name";
 
@@ -37,23 +37,23 @@ public class UserFragment extends Fragment  implements View.OnClickListener{
 
         initView(rootView);
 
-        if(getArguments()!=null && getArguments().containsKey(ARG_FULL_NAME) && getArguments().containsKey(ARG_COMPANY_NAME)){
+        if (getArguments() != null && getArguments().containsKey(ARG_FULL_NAME) && getArguments().containsKey(ARG_COMPANY_NAME)) {
             mCompanyName.setText(getArguments().getString(ARG_COMPANY_NAME));
             mFullName.setText(getArguments().getString(ARG_FULL_NAME));
 
         }
-            return rootView;
+        return rootView;
 
     }
 
     private void initView(View rootView) {
-        mFullName = (TextView)rootView.findViewById(R.id.user_fragment_tv_full_name);
-        mCompanyName = (TextView)rootView.findViewById(R.id.user_fragment_tv_company_name);
-        mButtonStart = (Button)rootView.findViewById(R.id.user_fragment_btStart);
+        mFullName = (TextView) rootView.findViewById(R.id.user_fragment_tv_full_name);
+        mCompanyName = (TextView) rootView.findViewById(R.id.user_fragment_tv_company_name);
+        mButtonStart = (Button) rootView.findViewById(R.id.user_fragment_btStart);
         mButtonStart.setOnClickListener(this);
     }
 
-    public static Fragment newInstance(String fullName, String companyName){
+    public static Fragment newInstance(String fullName, String companyName) {
         UserFragment fragment = new UserFragment();
         Bundle arg = new Bundle();
         arg.putString(ARG_FULL_NAME, fullName);
@@ -91,7 +91,7 @@ public class UserFragment extends Fragment  implements View.OnClickListener{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_log_out:
                 mLogin.logout();
                 break;

@@ -67,8 +67,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 String password = mEditTextPass.getText().toString();
                 if (login.length() > 0 && password.length() > 0) {
                     mLogin.login(login, password);
-                }else {
-                    Toast.makeText(getActivity(),R.string.fill_the_fields, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), R.string.fill_the_fields, Toast.LENGTH_LONG).show();
                 }
                 break;
         }

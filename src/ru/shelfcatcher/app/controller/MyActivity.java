@@ -109,7 +109,6 @@ public class MyActivity extends ActionBarActivity implements Login {
                     Log.e("log", "# @" + error.getMessage());
                     mError = true;
                     mToast = R.string.network_connection_error;
-                    Toast.makeText(getApplicationContext(), mToast, Toast.LENGTH_LONG).show();
                 }
                 if (error.getResponse() != null) {
                     int code = error.getResponse().getStatus();

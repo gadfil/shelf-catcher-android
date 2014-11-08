@@ -166,8 +166,8 @@ public class MyViewBorder extends View implements View.OnTouchListener {
             int leftOffset = (screenResolution.x - width) / 2;
             int topOffset = (screenResolution.y - height) / 2;
 //            frame = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
-            int b  = getResources().getDimensionPixelOffset(R.dimen.border);
-            frame = new Rect(b, b, displayWidth -b, displayHeight -b);
+            int b = getResources().getDimensionPixelOffset(R.dimen.border);
+            frame = new Rect(b, b, displayWidth - b, displayHeight - b);
         }
     }
 

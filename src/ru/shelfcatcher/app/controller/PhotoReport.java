@@ -5,9 +5,13 @@ package ru.shelfcatcher.app.controller;
  */
 public interface PhotoReport {
     public void photo();
+
     public void nextPhoto();
+
     public void newPhoto();
+
     public void cancel();
+
     public void report();
 
 }
