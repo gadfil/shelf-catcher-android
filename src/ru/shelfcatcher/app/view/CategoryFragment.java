@@ -40,7 +40,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
     private ListView mListView;
 
     private ActionBar mActionBar;
-
+//q
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

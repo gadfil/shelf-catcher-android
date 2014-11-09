@@ -20,6 +20,9 @@
     <string name="report_error">При отправке отчета произошла ошибка, попробуйте еще раз</string>
     <string name="network_connection_error">проверьте подключение к интернету</string>
     <string name="user_not_found">проверьте правильность логина и пароля</string>
+    <string name="tv_take_picture">Сфотографируйте полки с нашими товарами.</string>
+    <string name="bt_photo">Фото</string>
+    <string name="my_yes">Да</string>
 
 
 </resources>
