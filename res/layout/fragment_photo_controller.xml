@@ -22,17 +22,17 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/fragment_photo_controller_photo"/>
 
- <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="save"
-            android:gravity="center"
-            android:id="@+id/fragment_photo_controller_save"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/fragment_photo_controller_photo"/>
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_above="@+id/fragment_photo_controller_cancel"
-            android:id="@+id/tv_log"/>
+ <!--<Button-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="save"-->
+            <!--android:gravity="center"-->
+            <!--android:id="@+id/fragment_photo_controller_save"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toRightOf="@+id/fragment_photo_controller_photo"/>-->
+    <!--<TextView android:layout_width="match_parent" android:layout_height="wrap_content"-->
+            <!--android:layout_above="@+id/fragment_photo_controller_cancel"-->
+            <!--android:id="@+id/tv_log"/>-->
 
 
 

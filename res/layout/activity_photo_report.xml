@@ -8,7 +8,7 @@
                  android:layout_width="fill_parent" android:layout_height="fill_parent"
                  android:layout_above="@+id/controller_container"/>
 
-    <FrameLayout android:id="@+id/photoFrame"
+    <RelativeLayout android:id="@+id/photoFrame"
 
                  android:layout_width="fill_parent" android:layout_height="fill_parent"
                  android:layout_toLeftOf="@+id/textView3"
@@ -17,8 +17,25 @@
                  android:background="@android:color/transparent"
                  android:layout_above="@+id/textView4">
 
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:layout_centerVertical="true"
+                android:background="@color/holo_red_dark"/>
 
-    </FrameLayout>
+        <View android:layout_width="30dp" android:layout_height="97dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/border"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="25dp"
+                />
+        <View android:layout_width="30dp" android:layout_height="63dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/border"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="25dp"
+                />
+    </RelativeLayout>
     <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
@@ -63,42 +80,4 @@
             android:layout_alignParentRight="true"
             android:layout_above="@+id/controller_container"/>
 
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_centerVertical="true"
-            android:background="@android:color/white">
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:ems="10"
-                android:hint="max Y"
-                android:id="@+id/etMaxY" android:layout_gravity="left|top"
-                android:layout_margin="5dp"/>
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:ems="10"
-                android:hint="min Y"
-                android:id="@+id/etMinY" android:layout_gravity="left|top"
-                android:layout_margin="5dp"/>
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:ems="10"
-                android:hint="max Z"
-                android:id="@+id/etMaxZ" android:layout_gravity="left|top"
-                android:layout_margin="5dp"/>
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:ems="10"
-                android:hint="min Z"
-                android:id="@+id/etMinZ" android:layout_gravity="left|top"
-                android:layout_margin="5dp"/>
-
-    </LinearLayout>
 </RelativeLayout>

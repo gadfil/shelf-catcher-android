@@ -70,10 +70,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-    EditText etMaxY;
-    EditText etMinY;
-    EditText etMaxZ;
-    EditText etMinZ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,17 +100,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
         photoList = new ArrayList<Photo>();
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.GONE);
-
-
-        etMaxY = (EditText) findViewById(R.id.etMaxY);
-        etMinY = (EditText) findViewById(R.id.etMinY);
-        etMaxZ = (EditText) findViewById(R.id.etMaxZ);
-        etMinZ = (EditText) findViewById(R.id.etMinZ);
-
-        etMaxY.setText(""+Util.getMAX_Y(this));
-        etMinY.setText(""+Util.getMIN_Y(this));
-        etMaxZ.setText(""+Util.getMAX_Z(this));
-        etMinZ.setText(""+Util.getMIN_Z(this));
 
     }
 
@@ -274,13 +259,6 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 
     }
 
-    @Override
-    public void save() {
-        Util.setMaxY(this, Integer.parseInt(etMaxY.getText().toString()));
-        Util.setMinY(this, Integer.parseInt(etMinY.getText().toString()));
-        Util.setMaxZ(this, Integer.parseInt(etMaxZ.getText().toString()));
-        Util.setMinZ(this, Integer.parseInt(etMinZ.getText().toString()));
-    }
 
     @Override
     public void newPhoto() {

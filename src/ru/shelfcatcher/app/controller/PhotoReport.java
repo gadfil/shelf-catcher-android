@@ -14,7 +14,7 @@ public interface PhotoReport {
 
     public void report();
 
-    //For debug
-    public void save();
+//    //For debug
+//    public void save();
 
 }
