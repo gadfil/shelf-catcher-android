@@ -13,10 +13,7 @@ import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.*;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -60,7 +57,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
     private Camera mCamera;
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
-    private FrameLayout mFrameLayout;
+    private RelativeLayout mFrameLayout;
     private ProgressBar mProgressBar;
     private boolean isSend = true;
     private long mStoreId;
@@ -91,7 +88,7 @@ public class PhotoReportActivity extends ActionBarActivity implements PhotoRepor
 //            dirs+="/"+s;
 //        }
         mDir = new File(sdCardDirectory + "/ShelfCatcher" + dirs);
-        mFrameLayout = (FrameLayout) findViewById(R.id.photoFrame);
+        mFrameLayout = (RelativeLayout) findViewById(R.id.photoFrame);
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         mSurfaceHolder = mSurfaceView.getHolder();
         mSurfaceHolder.addCallback(this);
