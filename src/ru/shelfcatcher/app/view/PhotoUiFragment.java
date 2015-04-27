@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import ru.shelfcatcher.app.R;
 import ru.shelfcatcher.app.controller.PhotoReport;
+import ru.shelfcatcher.app.model.operation.Util;
 
 /**
  * Created by gadfil on 16.09.2014.
@@ -29,6 +30,7 @@ public class PhotoUiFragment extends Fragment implements View.OnClickListener, S
     private float[] accelData;
     private float[] magnetData;
     private float[] OrientationData;
+    TextView tvLog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,8 +48,10 @@ public class PhotoUiFragment extends Fragment implements View.OnClickListener, S
     private void initView(View rootView) {
         mButtonPhoto = (ImageButton) rootView.findViewById(R.id.fragment_photo_controller_photo);
         mButtonCancel = (Button) rootView.findViewById(R.id.fragment_photo_controller_cancel);
+        tvLog = (TextView)rootView.findViewById(R.id.tv_log);
         mButtonPhoto.setOnClickListener(this);
         mButtonCancel.setOnClickListener(this);
+        (rootView.findViewById(R.id.fragment_photo_controller_save)).setOnClickListener(this);
     }
 
     public static Fragment newInstance() {
@@ -94,7 +98,9 @@ public class PhotoUiFragment extends Fragment implements View.OnClickListener, S
 
 //        if ((xy >= 110 && xy <= 150) && (xz >= -80 && xz <= -60)) {
 
-        if ((zy < -50) && (xz < -65)) {
+//        if ((zy < -50) && (xz < -65)) {
+        tvLog.setText("y = " + zy + " ;  z = " +xz );
+        if ( zy >= Util.getMIN_Y(getActivity()) && zy <=Util.getMAX_Y(getActivity()) && xz>= Util.getMIN_Z(getActivity()) && xz<= Util.getMAX_Z(getActivity()) ) {
             mButtonPhoto.setClickable(true);
             mButtonPhoto.setBackgroundResource(R.drawable.photo_on_btn_default_holo_light);
         } else {
@@ -130,6 +136,8 @@ public class PhotoUiFragment extends Fragment implements View.OnClickListener, S
                 break;
             case R.id.fragment_photo_controller_cancel:
                 mPhotoReport.cancel();
+                break;case R.id.fragment_photo_controller_save:
+                mPhotoReport.save();
                 break;
         }
 
